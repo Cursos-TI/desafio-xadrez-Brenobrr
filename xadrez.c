@@ -55,5 +55,60 @@ int main() {
         }
     }
 
+    # Tabuleiro 8x8 para referência
+BOARD_SIZE = 8
+
+def move_bispo(x, y, steps=5, count=0):
+    if count == steps or x >= BOARD_SIZE or y >= BOARD_SIZE:
+        return
+    for i in range(1):  # loop aninhado 1
+        for j in range(1):  # loop aninhado 2
+            x += 1
+            y += 1
+            print(f"Bispo -> Posição: ({x}, {y})")
+            move_bispo(x, y, steps, count + 1)
+
+def move_torre(x, y, steps=5):
+    if steps == 0 or x >= BOARD_SIZE:
+        return
+    x += 1
+    print(f"Torre -> Posição: ({x}, {y})")
+    move_torre(x, y, steps - 1)
+
+def move_rainha(x, y, steps=8):
+    if steps == 0 or x <= 0:
+        return
+    x -= 1
+    print(f"Rainha -> Posição: ({x}, {y})")
+    move_rainha(x, y, steps - 1)
+
+def move_cavalo(x, y):
+    movimentos = [(2, 1), (1, 2), (-1, 2), (-2, 1),
+                  (-2, -1), (-1, -2), (1, -2), (2, -1)]
+    for dx in range(-2, 3):
+        for dy in range(-2, 3):
+            if (dx, dy) not in movimentos:
+                continue
+            nx, ny = x + dx, y + dy
+            if nx < 0 or ny < 0 or nx >= BOARD_SIZE or ny >= BOARD_SIZE:
+                break
+            print(f"Cavalo -> Posição: ({nx}, {ny})")
+            return  # Só 1 movimento em L é necessário
+
+# Posição inicial de exemplo
+x_inicial, y_inicial = 3, 3
+
+print("Movimento do Bispo:")
+move_bispo(x_inicial, y_inicial)
+
+print("\nMovimento da Torre:")
+move_torre(x_inicial, y_inicial)
+
+print("\nMovimento da Rainha:")
+move_rainha(x_inicial, y_inicial)
+
+print("\nMovimento do Cavalo:")
+move_cavalo(x_inicial, y_inicial)
+    
     return 0;
 }
